@@ -1,35 +1,35 @@
 <?php
   include "../connection.php";
   if($_SERVER["REQUEST_METHOD"]=='GET'){
-    if(!isset($_GET['nrp_dosen'])){
-      header("location:../view/admin-view-dosen.php");
+    if(!isset($_GET['nrp_mahasiswa'])){
+      header("location:../view/admin-view-mahasiswa.php");
       exit;
     }
-    $nrp_dosen = $_GET['nrp_dosen'];
-    $sql = "select * from dosen where nrp_dosen='$nrp_dosen'";
+    $nrp_mahasiswa = $_GET['nrp_mahasiswa'];
+    $sql = "select * from mahasiswa where nrp_mahasiswa='$nrp_mahasiswa'";
     $result = $con->query($sql);
     $row = $result->fetch_assoc();
     while(!$row){
-      header("location:../view/admin-view-dosen.php");
+      header("location:../view/admin-view-mahasiswa.php");
       exit;
     }
-    $nama_dosen = $row['nama_dosen'];
+    $nama_mahasiswa = $row['nama_mahasiswa'];
 
   }
   else{
-    $nrp_dosen = $_POST['nrp_dosen'];
-    $nama_dosen = $_POST['nama_dosen'];
+    $nrp_mahasiswa = $_POST['nrp_mahasiswa'];
+    $nama_mahasiswa = $_POST['nama_mahasiswa'];
     
 
-    $sql = "update `dosen` set nama_dosen='$nama_dosen', where nrp_dosen = '$nrp_dosen'";
+    $sql = "update `mahasiswa` set nama_mahasiswa='$nama_mahasiswa', where nrp_mahasiswa = '$nrp_mahasiswa'";
     $result = $con->query($sql);
     
   }
   
-  $kode_matkul = $_GET['nrp_dosen'];
-  if(isset($_POST['update-dosen'])){
-    $nama_dosen=$_POST['nama_dosen'];
-    $sql="update `dosen` set nrp_dosen=$nrp_dosen, nama_dosen='$nama_dosen' where nrp_dosen=$nrp_dosen";
+  $kode_matkul = $_GET['nrp_mahasiswa'];
+  if(isset($_POST['update-mahasiswa'])){
+    $nama_mahasiswa=$_POST['nama_mahasiswa'];
+    $sql="update `mahasiswa` set nrp_mahasiswa=$nrp_mahasiswa, nama_mahasiswa='$nama_mahasiswa' where nrp_mahasiswa=$nrp_mahasiswa";
     $result=mysqli_query($con,$sql);
     if($result){
       echo "updated successfully";
@@ -72,17 +72,17 @@
  <br><br><div class="card">
  
  <div class="card-header bg-warning">
- <h1 class="text-white text-center">  Update Nama Dosen</h1>
+ <h1 class="text-white text-center">  Update Nama Mahasiswa </h1>
  </div><br>
- <label> NRP Dosen: </label>
- <input type="text" name="nrp_dosen" value="<?php echo $row['nrp_dosen']; ?>" class="form-control"> <br>
+ <label> NRP Mahasiswa: </label>
+ <input type="text" name="nrp_mahasiswa" value="<?php echo $row['nrp_mahasiswa']; ?>" class="form-control"> <br>
 
- <label> Nama Dosen: </label>
- <input type="text" name="nama_dosen" value="<?php echo $row['nama_dosen']; ?>" class="form-control"> <br>
+ <label> Nama Mahasiswa: </label>
+ <input type="text" name="nama_mahasiswa" value="<?php echo $row['nama_mahasiswa']; ?>" class="form-control"> <br>
 
 
- <button class="btn btn-success" type="submit" name="update-dosen"> Submit </button><br>
- <a class="btn btn-info" type="submit" name="cancel" href="../view/admin-view-dosen.php"> Cancel </a><br>
+ <button class="btn btn-success" type="submit" name="update-mahasiswa"> Submit </button><br>
+ <a class="btn btn-info" type="submit" name="cancel" href="../view/admin-view-mahasiswa.php"> Cancel </a><br>
 
  </div>
  </form>
