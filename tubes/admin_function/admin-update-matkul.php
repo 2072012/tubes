@@ -1,54 +1,42 @@
 <?php
   include "../connection.php";
-  // $kode_matkul="";
-  // $nama_matkul="";
+  if($_SERVER["REQUEST_METHOD"]=='GET'){
+    if(!isset($_GET['kode_matkul'])){
+      header("location:../view/admin-view-matkul.php");
+      exit;
+    }
+    $kode_matkul = $_GET['kode_matkul'];
+    $sql = "select * from matkul where kode_matkul='$kode_matkul'";
+    $result = $con->query($sql);
+    $row = $result->fetch_assoc();
+    while(!$row){
+      header("location:../view/admin-view-matkul.php");
+      exit;
+    }
+    $nama_matkul = $row['nama_matkul'];
 
-  // $error="";
-  // $success="";
-
-  // if($_SERVER["REQUEST_METHOD"]=='GET'){
-  //   if(!isset($_GET['kode_matkul'])){
-  //     header("location:../view/admin-view.php");
-  //     exit;
-  //   }
-  //   $kode_matkul = $_GET['kode_matkul'];
-  //   $sql = "select * from matkul where kode_matkul=$kode_matkul";
-  //   $result = $con->query($sql);
-  //   $row = $result->fetch_assoc();
-  //   while(!$row){
-  //     header("location:../view/admin-view.php");
-  //     exit;
-  //   }
-  //   $nama_matkul = $row['nama_matkul'];
-
-  // }
-  // else{
-  //   $kode_matkul = $_POST['kode_matkul'];
-  //   $nama_matkul = $_POST['nama_matkul'];
+  }
+  else{
+    $kode_matkul = $_POST['kode_matkul'];
+    $nama_matkul = $_POST['nama_matkul'];
     
 
-  //   $sql = "update matkul set nama_matkul='$nama_matkul', where kode_matkul = '$kode_matkul'";
-  //   $result = $con->query($sql);
+    $sql = "update `matkul` set nama_matkul='$nama_matkul', where kode_matkul = '$kode_matkul'";
+    $result = $con->query($sql);
     
-  // }
+  }
   
   $kode_matkul = $_GET['kode_matkul'];
-  $sql = "select * from matkul where kode_matkul='$kode_matkul'";
-  $result = mysqli_query($con,$sql);
-  $row=mysqli_fetch_assoc($result);
-  $nama_matkul=$row['nama_matkul'];
-
-  if(isset($_POST['submit'])){
-    $nama_matkul = $_POST['nama_matkul'];
-
-    $sql="update 'matkul' set nama_matkul='$nama_matkul', where kode_matkul='$kode_matkul'";
-    $result = mysqli_query($con,$sql);
+  if(isset($_POST['update-matkul'])){
+    $nama_matkul=$_POST['nama_matkul'];
+    $sql="update `matkul` set kode_matkul=$kode_matkul, nama_matkul='$nama_matkul' where kode_matkul=$kode_matkul";
+    $result=mysqli_query($con,$sql);
     if($result){
-      echo "Update successfully";
+      echo "updated successfully";
     }else{
       die(mysqli_error($con));
-    }
-  }
+    };
+  };
 ?>
 <!DOCTYPE html>
 <html>
@@ -93,8 +81,8 @@
  <input type="text" name="nama_matkul" value="<?php echo $row['nama_matkul']; ?>" class="form-control"> <br>
 
 
- <button class="btn btn-success" type="submit" name="submit"> Submit </button><br>
- <a class="btn btn-info" type="submit" name="cancel" href="../view/admin-view.php"> Cancel </a><br>
+ <button class="btn btn-success" type="submit" name="update-matkul"> Submit </button><br>
+ <a class="btn btn-info" type="submit" name="cancel" href="../view/admin-view-matkul.php"> Cancel </a><br>
 
  </div>
  </form>

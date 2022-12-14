@@ -143,6 +143,7 @@ if($_SESSION['level']!="admin")
       <tr>
         <th>$row[semester_ke]</th>
         <td>
+        <a class='btn btn-success' href='../admin_function/admin-update-semester.php?semester_ke=$row[semester_ke]'>Update</a>
                   <a class='btn btn-danger' href='../admin_function/admin-delete.php?semester_ke=$row[semester_ke]'>Delete</a>
                 </td>
       </tr>

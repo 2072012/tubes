@@ -1,40 +1,46 @@
 <?php
   include "../connection.php";
-  $semester_ke="";
-
-  $error="";
-  $success="";
-
   if($_SERVER["REQUEST_METHOD"]=='GET'){
-    if(!isset($_GET['semester_ke'])){
-      header("location:../view/admin-view.php");
+    if(!isset($_GET['nama_ruangan'])){
+      header("location:../view/admin-view-ruangan.php");
       exit;
     }
-    $semester_ke = $_GET['semester_ke'];
-    $sql = "select * from semester";
+    $nama_ruangan = $_GET['nama_ruangan'];
+    $sql = "select * from ruangan where nama_ruangan='$nama_ruangan'";
     $result = $con->query($sql);
     $row = $result->fetch_assoc();
     while(!$row){
-      header("location:../view/admin-view.php");
+      header("location:../view/admin-view-ruangan.php");
       exit;
     }
-    $semester_ke = $_GET['semester_ke'];
+    $nama_ruangan = $row['nama_ruangan'];
 
   }
   else{
-    $semester_ke = $_GET['semester_ke'];
+    $nama_ruangan = $_POST['nama_ruangan'];
     
 
-    $sql = "UPDATE from semester set semester_ke='$semester_ke'";
+    $sql = "update `ruangan` set nama_ruangan='$nama_ruangan', where nama_ruangan = '$nama_ruangan'";
     $result = $con->query($sql);
     
   }
   
+  $nama_ruangan = $_GET['nama_ruangan'];
+  if(isset($_POST['update-ruangan'])){
+    $nama_ruangan=$_POST['nama_ruangan'];
+    $sql="update `ruangan` set nama_ruangan='$nama_ruangan'";
+    $result=mysqli_query($con,$sql);
+    if($result){
+      echo "updated successfully";
+    }else{
+      die(mysqli_error($con));
+    };
+  };
 ?>
 <!DOCTYPE html>
 <html>
 <head>
- <title>Admin Update Semester</title>
+ <title>Admin Update Ruangan</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
@@ -45,7 +51,7 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" class="fw-bold">
       <div class="container-fluid">
-        <a class="navbar-brand" href="index.php">ADMIN OPERATION</a>
+        <a class="navbar-brand" href="../view/admin-view.php">ADMIN OPERATION</a>
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item">
@@ -65,14 +71,14 @@
  <br><br><div class="card">
  
  <div class="card-header bg-warning">
- <h1 class="text-white text-center">  Update Semester </h1>
+ <h1 class="text-white text-center">  Update Nama Ruangan </h1>
  </div><br>
+ <label> Nama Ruangan: </label>
+ <input type="text" name="nama_ruangan" value="<?php echo $row['nama_ruangan']; ?>" class="form-control"> <br>
 
- <label> Semester : </label>
- <input type="text" name="semester_ke" value="<?php echo $semester_ke; ?>" class="form-control"> <br>
 
- <button class="btn btn-success" type="submit" name="submit"> Submit </button><br>
- <a class="btn btn-info" type="submit" name="cancel" href="../view/admin-view.php"> Cancel </a><br>
+ <button class="btn btn-success" type="submit" name="update-ruangan"> Submit </button><br>
+ <a class="btn btn-info" type="submit" name="cancel" href="../view/admin-view-ruangan.php"> Cancel </a><br>
 
  </div>
  </form>

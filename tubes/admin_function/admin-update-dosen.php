@@ -1,40 +1,47 @@
 <?php
   include "../connection.php";
-  $semester_ke="";
-
-  $error="";
-  $success="";
-
   if($_SERVER["REQUEST_METHOD"]=='GET'){
-    if(!isset($_GET['semester_ke'])){
-      header("location:../view/admin-view.php");
+    if(!isset($_GET['nrp_dosen'])){
+      header("location:../view/admin-view-dosen.php");
       exit;
     }
-    $semester_ke = $_GET['semester_ke'];
-    $sql = "select * from semester";
+    $nrp_dosen = $_GET['nrp_dosen'];
+    $sql = "select * from dosen where nrp_dosen='$nrp_dosen'";
     $result = $con->query($sql);
     $row = $result->fetch_assoc();
     while(!$row){
-      header("location:../view/admin-view.php");
+      header("location:../view/admin-view-dosen.php");
       exit;
     }
-    $semester_ke = $_GET['semester_ke'];
+    $nama_dosen = $row['nama_dosen'];
 
   }
   else{
-    $semester_ke = $_GET['semester_ke'];
+    $nrp_dosen = $_POST['nrp_dosen'];
+    $nama_dosen = $_POST['nama_dosen'];
     
 
-    $sql = "UPDATE from semester set semester_ke='$semester_ke'";
+    $sql = "update `dosen` set nama_dosen='$nama_dosen', where nrp_dosen = '$nrp_dosen'";
     $result = $con->query($sql);
     
   }
   
+  $kode_matkul = $_GET['nrp_dosen'];
+  if(isset($_POST['update-dosen'])){
+    $nama_dosen=$_POST['nama_dosen'];
+    $sql="update `dosen` set nrp_dosen=$nrp_dosen, nama_dosen='$nama_dosen' where nrp_dosen=$nrp_dosen";
+    $result=mysqli_query($con,$sql);
+    if($result){
+      echo "updated successfully";
+    }else{
+      die(mysqli_error($con));
+    };
+  };
 ?>
 <!DOCTYPE html>
 <html>
 <head>
- <title>Admin Update Semester</title>
+ <title>Admin Update Matkul</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
@@ -45,7 +52,7 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" class="fw-bold">
       <div class="container-fluid">
-        <a class="navbar-brand" href="index.php">ADMIN OPERATION</a>
+        <a class="navbar-brand" href="../view/admin-view.php">ADMIN OPERATION</a>
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item">
@@ -65,14 +72,17 @@
  <br><br><div class="card">
  
  <div class="card-header bg-warning">
- <h1 class="text-white text-center">  Update Semester </h1>
+ <h1 class="text-white text-center">  Update Mata Kuliah </h1>
  </div><br>
+ <label> Kode Mata Kuliah: </label>
+ <input type="text" name="nrp_dosen" value="<?php echo $row['nrp_dosen']; ?>" class="form-control"> <br>
 
- <label> Semester : </label>
- <input type="text" name="semester_ke" value="<?php echo $semester_ke; ?>" class="form-control"> <br>
+ <label> Nama Mata Kuliah: </label>
+ <input type="text" name="nama_dosen" value="<?php echo $row['nama_dosen']; ?>" class="form-control"> <br>
 
- <button class="btn btn-success" type="submit" name="submit"> Submit </button><br>
- <a class="btn btn-info" type="submit" name="cancel" href="../view/admin-view.php"> Cancel </a><br>
+
+ <button class="btn btn-success" type="submit" name="update-dosen"> Submit </button><br>
+ <a class="btn btn-info" type="submit" name="cancel" href="../view/admin-view-dosen.php"> Cancel </a><br>
 
  </div>
  </form>

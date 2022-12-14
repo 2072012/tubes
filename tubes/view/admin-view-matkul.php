@@ -127,6 +127,7 @@ if($_SESSION['level']!="admin")
         <td>$row[kode_matkul]</td>
         <td>$row[nama_matkul]</td>
         <td>
+        <a class='btn btn-success' href='../admin_function/admin-update-matkul.php?kode_matkul=$row[kode_matkul]'>Update</a>
                   <a class='btn btn-danger' href='../admin_function/admin-delete.php?kode_matkul=$row[kode_matkul]'>Delete</a>
                 </td>
       </tr>
