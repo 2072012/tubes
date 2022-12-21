@@ -4,7 +4,13 @@ if (isset($_POST['addsemester'])) {
     $semester_ke = $_POST['semester_ke'];
     $a = " INSERT INTO `semester`(`semester_ke`) VALUES ( '$semester_ke')";
     $query = mysqli_query($con, $a);
+    if($query){
+        $_SESSION['status'] = "Data inserted successfully";
+    } else {
+        echo "something went wrong";
+    }
 }
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -40,7 +46,18 @@ if (isset($_POST['addsemester'])) {
 
             <br><br>
             <div class="card">
-
+            <?php
+  if(isset($_SESSION['status']))
+  {
+    ?> <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>Hey!</strong> <?php echo $_SESSION['status']?>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div><?php
+    unset($_SESSION['status']);
+  }
+  ?>
                 <div class="card-header bg-primary">
                     <h1 class="text-white text-center"> Semester Baru </h1>
                 </div><br>

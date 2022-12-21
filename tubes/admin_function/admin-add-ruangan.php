@@ -4,6 +4,11 @@ if (isset($_POST['addruangan'])) {
     $nama_ruangan = $_POST['nama_ruangan'];
     $a = " INSERT INTO `ruangan`(`nama_ruangan`) VALUES ( '$nama_ruangan')";
     $query = mysqli_query($con, $a);
+    if($query){
+        $_SESSION['status'] = "Data inserted successfully";
+    } else {
+        echo "something went wrong";
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -36,9 +41,22 @@ if (isset($_POST['addruangan'])) {
         </div>
     </nav>
     <div class="col-lg-6 m-auto">
+        
         <form method="post">
             <br><br>
             <div class="card">
+            <?php
+  if(isset($_SESSION['status']))
+  {
+    ?> <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>Hey!</strong> <?php echo $_SESSION['status']?>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div><?php
+    unset($_SESSION['status']);
+  }
+  ?>
                 <div class="card-header bg-primary">
                     <h1 class="text-white text-center"> Ruangan Baru </h1>
                 </div><br>
@@ -47,7 +65,7 @@ if (isset($_POST['addruangan'])) {
                 <input type="text" name="nama_ruangan" class="form-control"> <br>
 
                 <button class="btn btn-success" type="submit" name="addruangan"> Submit </button><br>
-                <a class="btn btn-info" type="submit" name="cancel" href="../view/admin-view.php"> Cancel </a><br>
+                <a class="btn btn-info" type="submit" name="cancel" href="../view/admin-view-ruangan.php"> Cancel </a><br>
 
             </div>
         </form>

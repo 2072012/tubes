@@ -131,7 +131,7 @@ if($_SESSION['level']!="tu")
 
     
         <td>
-                  <a class='btn btn-danger' href='../admin_function/admin-delete.php?dosen_nrp_dosen=$row[dosen_nrp_dosen]'>Delete</a>
+                  <a class='btn btn-danger' href='../admin_function/admin-delete.php?dosen_nrp_dosen=$row[dosen_nrp_dosen]'onClick=\"return confirm('Do you want to Delete this data ?');\"'>Delete</a>
                 </td>
       </tr>
       ";

@@ -149,7 +149,7 @@ if($_SESSION['level']!="admin")
     
         <td>
         <a class='btn btn-success' href='../admin_function/admin-update-mahasiswa.php?nrp_mahasiswa=$row[nrp_mahasiswa]'>Update</a>
-                  <a class='btn btn-danger' href='../admin_function/admin-delete.php?nrp_mahasiswa=$row[nrp_mahasiswa]'>Delete</a>
+                  <a class='btn btn-danger' href='../admin_function/admin-delete.php?nrp_mahasiswa=$row[nrp_mahasiswa]'onClick=\"return confirm('Do you want to Delete this data ?');\"'>Delete</a>
                 </td>
       </tr>
       ";

@@ -5,6 +5,11 @@ if (isset($_POST['addmatkul'])) {
     $nama_matkul = $_POST['nama_matkul'];
     $a = " INSERT INTO `matkul`(`kode_matkul`, `nama_matkul`) VALUES ('$kode_matkul', '$nama_matkul' )";
     $query = mysqli_query($con, $a);
+    if($query){
+        $_SESSION['status'] = "Data inserted successfully";
+    } else {
+        echo "something went wrong";
+    }
 }
 ?>
 
@@ -43,7 +48,18 @@ if (isset($_POST['addmatkul'])) {
 
             <br><br>
             <div class="card">
-
+            <?php
+  if(isset($_SESSION['status']))
+  {
+    ?> <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>Hey!</strong> <?php echo $_SESSION['status']?>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div><?php
+    unset($_SESSION['status']);
+  }
+  ?>
                 <div class="card-header bg-primary">
                     <h1 class="text-white text-center"> Mata Kuliah Baru </h1>
                 </div><br>
