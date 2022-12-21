@@ -32,10 +32,10 @@
     $sql="update `mahasiswa` set nrp_mahasiswa=$nrp_mahasiswa, nama_mahasiswa='$nama_mahasiswa' where nrp_mahasiswa=$nrp_mahasiswa";
     $result=mysqli_query($con,$sql);
     if($result){
-      echo "updated successfully";
-    }else{
-      die(mysqli_error($con));
-    };
+      $_SESSION['status'] = "Data updated successfully";
+  } else {
+      echo "something went wrong";
+  }
   };
 ?>
 <!DOCTYPE html>
@@ -70,7 +70,18 @@
  <form method="post">
  
  <br><br><div class="card">
- 
+ <?php
+  if(isset($_SESSION['status']))
+  {
+    ?> <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>Hey!</strong> <?php echo $_SESSION['status']?>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div><?php
+    unset($_SESSION['status']);
+  }
+  ?>
  <div class="card-header bg-warning">
  <h1 class="text-white text-center">  Update Nama Mahasiswa </h1>
  </div><br>

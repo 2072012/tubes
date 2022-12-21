@@ -12,6 +12,15 @@ if($_SESSION['level']!="admin")
 {
     die("Anda bukan admin");
 }
+
+if(isset($_GET['kode_matkul'])){
+  $result = mysqli_query($con, "delete from matkul where kode_matkul='$_GET[kode_matkul]'");
+  if($result){
+    $_SESSION['status'] = "Data deleted successfully";
+} else {
+    echo "something went wrong";
+}
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -22,7 +31,10 @@ if($_SESSION['level']!="admin")
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <title>Admin View</title>
   </head>
   <style>
@@ -104,7 +116,18 @@ if($_SESSION['level']!="admin")
   </li>
 </ul>
       </nav>
-   
+      <?php
+  if(isset($_SESSION['status']))
+  {
+    ?><div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>Hey!</strong> <?php echo $_SESSION['status']?>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div><?php
+    unset($_SESSION['status']);
+  }
+  ?>
   <div class="card">
     <table class="table">
     <thead>
@@ -128,8 +151,8 @@ if($_SESSION['level']!="admin")
         <td>$row[nama_matkul]</td>
         <td>
         <a class='btn btn-success' href='../admin_function/admin-update-matkul.php?kode_matkul=$row[kode_matkul]'>Update</a>
-                  <a class='btn btn-danger' href='../admin_function/admin-delete.php?kode_matkul=$row[kode_matkul]'onClick=\"return confirm('Do you want to Delete this data ?');\"'>Delete</a>
-                </td>
+        <a class='btn btn-danger' href='?kode_matkul=$row[kode_matkul]'onClick=\"return confirm('Do you want to Delete this data ?');\"'>Delete</a>
+        </td>
       </tr>
       ";
         }
@@ -138,5 +161,7 @@ if($_SESSION['level']!="admin")
   </table>
       </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+ 
   </body>
 </html>
+
