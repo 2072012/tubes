@@ -72,7 +72,7 @@ if (isset($_POST['addmatkul'])) {
                 <input type="text" name="nama_matkul" class="form-control"> <br>
 
                 <button class="btn btn-success" type="submit" name="addmatkul"> Submit </button><br>
-                <a class="btn btn-info" type="submit" name="cancel" href="../view/admin-view.php"> Cancel </a><br>
+                <a class="btn btn-info" type="submit" name="cancel" href="../view/admin-view-matkul.php"> Cancel </a><br>
 
             </div>
         </form>
