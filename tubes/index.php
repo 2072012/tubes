@@ -13,14 +13,20 @@ if($_SESSION['level']!="dosen")
     die("Anda bukan dosen");
 }
 if (isset($_POST['addabsensi'])) {
+    $jadwal_dosen = $_POST['jadwal'];
     $pertemuan = $_POST['pertemuan'];
     $tanggal = $_POST['tanggal'];
     $waktu = $_POST['waktu'];
     $jumlah_asisten = $_POST['jumlah'];
     $pbm = $_POST['pbm'];
-    $a = " INSERT INTO `det_jadwal`(`pertemuan_ke`, `tanggal`,`waktu`,`jumlah`,`pbm`) VALUES ('$pertemuan', '$tanggal','$waktu','$jumlah_asisten','$pbm')";
+    $a = " INSERT INTO `det_jadwal`(`pertemuan_ke`, `tanggal`,`waktu`,`jumlah`,`pbm`,`jadwal_dosen_nrp_dosen`) VALUES ('$pertemuan', '$tanggal','$waktu','$jumlah_asisten','$pbm','$$jadwal_dosen')";
     $query = mysqli_query($con, $a);
 }
+// if (isset($_POST['jadwal'])) {
+//     $jadwal_dosen = $_POST['jadwal'];
+//     $a = " INSERT INTO `det_jadwal`(`jadwal_dosen_nrp_dosen`) VALUES ('$jadwal_dosen')";
+//     $query = mysqli_query($con, $a);
+// }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -29,6 +35,7 @@ if (isset($_POST['addabsensi'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <title>User</title>
 </head>
@@ -40,7 +47,7 @@ if (isset($_POST['addabsensi'])) {
         border: solid 3px #2B4257;
         background: white;
         position: absolute;
-        left: 20%;
+        left: 10%;
         top: 12% ;
       }
       .navbar-custom{
@@ -58,11 +65,11 @@ if (isset($_POST['addabsensi'])) {
         }
       .nav{
         position: absolute;
-        left: 44%;
+        left: 40%;
       }
       .nav-link{
         color: white;
-        font-size: medium;
+        font-size: small;
         font-family: system-ui;
         padding: 30px;
       }
@@ -93,24 +100,18 @@ if (isset($_POST['addabsensi'])) {
     <div class="chartBox">
             <form method="POST">
                 <div class="form-group">
-                    <label for="">NRP/ NamaDosen /Kode Mata Kuliah/Nama mata kuliah/Ruangan/Semester/Kelas</label>
-                    <select name="matakuliah" id="matakuliah" class="form-control" required>
+                    <label for="">Jadwal Dosen</label>
+                    <select name="jadwal" id="jadwal" class="form-control" required>
                         <option value="">Pilih</option>
                             <?php
-                            $sql = "select * from jadwal INNER JOIN matkul ON jadwal.matkul_kode_matkul = matkul.kode_matkul INNER JOIN dosen ON jadwal.dosen_nrp_dosen = dosen.nrp_dosen";
+                            $sql = "select * from jadwal";
                             $result = $con->query($sql);
                             if (!$result) {
                                 die("Invalid query!");
                             }
-                            while ($row = $result->fetch_assoc()) {
-                                echo "
-      <option>
-        $row[dosen_nrp_dosen] / $row[nama_dosen] / $row[matkul_kode_matkul] / $row[nama_matkul] / $row[ruangan_nama_ruangan] / $row[semester_semester_ke] / $row[kelas]
-      </option>
-      ";
-                            }
+                            while ($row = mysqli_fetch_array ($result)) {
                             ?>
-                            <!-- https://stackoverflow.com/questions/3245967/can-an-option-in-a-select-tag-carry-multiple-values -->
+                                <option value=""><?php echo $row['dosen_nrp_dosen']," ",$row['matkul_kode_matkul']," ", $row['ruangan_nama_ruangan'];?></option> <?php } ?>
                     </select>
                 </div>
                 <div class="form-group mt-2">
@@ -188,3 +189,19 @@ if (isset($_POST['addabsensi'])) {
 </body>
 
 </html>
+<!-- <script>
+    $(document).ready(function(){
+        $('#nrp_dosen').change(function(){
+            var nrp_dosen = $(this).val();
+
+            $.ajax({
+                url : "index2.php",
+                method: "post",
+                data : {nrp_dosen:nrp_dosen},
+                success:function(data){
+                    $('#nrp_dosen').html(data);
+                }
+            })
+        })
+    })
+</script> -->
