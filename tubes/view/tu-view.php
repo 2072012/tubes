@@ -55,9 +55,9 @@ if($_SESSION['level']!="tu")
       }
       .nav-link{
         color: white;
-        font-size: medium;
+        font-size: small;
         font-family: system-ui;
-        padding: 30px;
+        padding: 10px;
       }
       body{
         background-color: white;

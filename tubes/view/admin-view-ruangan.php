@@ -72,13 +72,13 @@ if(isset($_GET['nama_ruangan'])){
         }
       .nav{
         position: absolute;
-        left: 12%;
+        left: 20%;
       }
       .nav-link{
         color: white;
-        font-size: medium;
+        font-size: small;
         font-family: system-ui;
-        padding: 30px;
+        padding: 10px;
       }
       body{
         background-color: white;
@@ -96,39 +96,39 @@ if(isset($_GET['nama_ruangan'])){
     <a class="nav-link active" href="../view/admin-view.php">S e m e s t e r</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link " href="">|</a>
+    <a class="nav-link " href=""></a>
   </li>
   <li class="nav-item">
     <a class="nav-link active" href="../view/admin-view-matkul.php">M a t a K u l i a h</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link " href="">|</a>
+    <a class="nav-link " href=""></a>
   </li>
     <li class="nav-item">
     <a class="nav-link active" href="../view/admin-view-ruangan.php">R u a n g a n</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link " href="">|</a>
+    <a class="nav-link " href=""></a>
   </li>
   </li>
     <li class="nav-item">
     <a class="nav-link active" href="../view/admin-view-dosen.php">D o s e n</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link " href="">|</a>
+    <a class="nav-link " href=""></a>
   </li>
   </li>
     <li class="nav-item">
     <a class="nav-link active" href="../view/admin-view-mahasiswa.php">M a h a s i s w a</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link " href="">|</a>
+    <a class="nav-link " href=""></a>
   </li>
   <li class="nav-item">
     <a class="nav-link" href="../view/admin-view-jadwal.php">J a d w a l</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link " href="">|</a>
+    <a class="nav-link " href=""></a>
   </li>
   <li class="nav-item">
     <a class="nav-link" href="../user/logout.php">L o g  o u t</a>
